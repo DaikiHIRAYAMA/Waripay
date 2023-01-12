@@ -15,71 +15,20 @@
         <!-- CSS -->
         <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
         <!-- Styles -->
-        <style>
-            body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: "Nunito", sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-            .full-height {
-                height: 100vh;
-            }
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-            .position-ref {
-                position: relative;
-            }
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-            .content {
-                text-align: center;
-            }
-            .title {
-                font-size: 84px;
-            }
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: 0.1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-            @livewireStyles
+        <link rel="stylesheet" href="{{ asset('/css/app.css')}}">
     </head>
 
 
     <body>
-    @livewireScripts
 
-    <form class="text-center flex-center">
-    <div class="col-md-4 text-center">
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="グループ名を入力してください">
- #TODO: type change
-    </div>
-@include('livewire.group-user-add')
-
-    <button  type='submit' class='btn btn-outline-info text-center'>グループ作成</button>
-    </div>
-    #TODO: type change
+    <form class="text-center flex-center" action="{{ route('group.store') }}" method="post" id="group">
+        @csrf
     </form>
+        <div class="col-md-4 text-center">
+            <input type="text" class="form-control" name="group_name" placeholder="グループ名を入力してください " form="group">
+        </div>
+        <button type="submit" class='btn btn-outline-info text-center' form="group">グループ作成 </button>
 
-
-    </div>
 
     <div class="card">
     <div class="card-header">
@@ -105,6 +54,5 @@
     </div>
     </div>
     <br/>
-    @livewireScripts
     </body>
 </html>

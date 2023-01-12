@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
-            $table->id('event_id');
-            $table->text('event_name');
-            $table->json('receiver_list');
-            $table->json('payer_list');
+        Schema::create('members', function (Blueprint $table) {
+            $table->id('member_id');
+            $table->text('member_name');
+            $table->unsignedBigInteger('group_id');
             $table->timestamps();
+
+            $table->foreign('group_id')->references('group_id')->on('groups');
+
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('members');
     }
 };
