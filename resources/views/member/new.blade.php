@@ -7,7 +7,7 @@
         <title>Group create</title>
         <header class="header">
         <p class="title m-b-md header-text text-center">
-        <a href="#">Waripay</a></p>
+        <a onclick="window.location.reload(true);" class='reload'>Waripay</a></p>
         </header>
 
         <!-- Fonts -->
@@ -32,22 +32,20 @@
     <div>
     <p class="text-center">グループ名</p>
     <h1 class="text-center">{{ $group->group_name }}</h1>
+
     </div>
 
-    <form class="text-center flex-center" action="{{ route('member.store') }}" method="post" id="member">
+    <form action="{{ route('member.store') }}" method="post" id="member">
         @csrf
     </form>
 
     @livewire('member')
 
-    {{ $group_id = $group->group_id }}
-
-    <input type="hidden" name="group_id" id="group_id" value="<?php echo $group->group_id; ?>" form="member" >
 
     <div class="text-center">
     <button type='submit' class='btn btn-outline-info text-center' form="member">メンバー決定</button>
     </div>
-    
+
     <!-- livewire -->
     @livewireScripts()
     </body>

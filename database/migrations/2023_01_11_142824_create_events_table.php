@@ -17,8 +17,15 @@ return new class extends Migration
             $table->id('event_id');
             $table->text('event_name');
             $table->json('receiver_list');
-            $table->json('payer_list');
+            $table->integer('payer_list');
+            $table->integer('cost');
+            $table->boolean('square')->default(0);
+
+            $table->unsignedBigInteger('group_id');
+
             $table->timestamps();
+
+            $table->foreign('group_id')->references('group_id')->on('groups');
         });
     }
 

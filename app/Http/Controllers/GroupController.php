@@ -17,7 +17,9 @@ class GroupController extends Controller
         $group = new Group();
         $group->group_name = $request->group_name;
         $group->save();
-        session()->put('group', $group);
+        $group_id = $group->group_id;
+        session(['group' => $group]);
+        session(['group_id' => $group_id]);
 
         return redirect()->route('member.create');//->with('group' , $group);
 

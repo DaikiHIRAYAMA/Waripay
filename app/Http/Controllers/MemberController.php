@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Member;
+use App\Models\Calculate;
+use Carbon\Carbon;
 
 
 class MemberController extends Controller
@@ -18,39 +20,58 @@ class MemberController extends Controller
     public function store(Request $request){
 
       // return view('event.index')->with('request',$request);
-
-     
         $members = [];
-        $group = session()->get('group');
+        $group_id = session()->get('group')->id;
         $cnt = $request->cnt;
         $i = 0;
-        $member = new Member();
-        $member->group_id = $request->group_id;
-        $member->member_name = $request->{"member_name_".$i};
-        $member->save();
-        $members[] = $member;
 
-
-
-        /*
         for($i = 0; $i < $cnt; $i++){
-
             $member = new Member();
-            $member->group_id = $group->group_id;
-
+            $member->group_id = $group_id;
             $member->member_name = $request->{"member_name_".$i};
             $member->save();
             $members[] = $member;
-            return view('event.index')->with('member',$member);
 
         }
 
-        */
-        session()->push('members', $members);
+        session()->put('members', $members);
 
-        return redirect()->route('event.create');
+        $parameter = $this->makeURI();
 
+        $this->createCalculate();
 
-
+        return redirect()->route('event.index',['parameter' => $parameter]);
     }
+
+    public function makeURI(){
+
+        $group_id = session()->get('group')->id;
+        $date = Carbon::now();
+        $data = json_encode(['group' => $group_id , 'date' => $date ]);
+        $parameter = $this->base64_urlsafe_encode($data);
+
+        return ($parameter);
+    }
+
+    function base64_urlsafe_encode($data) {
+	    $data = base64_encode(gzcompress($data));
+	    return str_replace(array('+', '/', '='), array('_', '-', '.'), $data);
+}
+
+    public function createCalculate(){
+
+        $group_id = session()->get('group')->id;
+        $members = Member::where('group_id',$group_id)->get();
+
+        //calculate[]  を作成
+        //一度だけ実行
+        foreach($members as $member){
+            $calculate = new Calculate();
+            //$calculate->calculate = [];
+            $calculate->group_id = $group_id;
+            $calculate->member_id = $member->member_id;
+            $calculate->save();
+        }
+    }
+
 }

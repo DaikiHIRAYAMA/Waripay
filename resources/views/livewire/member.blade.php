@@ -3,7 +3,7 @@
     <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">{{ $i+1 }} 人目</label>
         <div class="col-sm-8">
-            <input type="text" name="member_name_{{ $i }}"  id="member_name_{{ $i }}" class="form-control" form="member" value="名前を入力してください" required/>
+            <input type="text" name="member_name_{{ $i }}"  id="member_name_{{ $i }}" class="form-control" form="member" placeholder="名前を入力してください" required/>
         </div>
     </div>
     @endfor
